@@ -10,17 +10,16 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    @product = @store.products(params[:id])
   end
 
   # GET /products/new
   def new
-    @product = Product.new
     @product = @store.products.new
   end
 
   # GET /products/1/edit
   def edit
-    @product = Product.find(params[:id])
     @product = @store.products.find(params[:id])
   end
 
@@ -28,7 +27,6 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
 
-    @product = Product.new(params[:product])
     @product = @store.products.new(product_params)
 
     respond_to do |format|
@@ -45,7 +43,6 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
-    @product = Product.find(params[:id])
     @product = @store.products.find(params[:id])
 
     respond_to do |format|
@@ -62,9 +59,10 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
+    @product = @store.products.find(params[:id])
     @product.destroy
     respond_to do |format|
-      format.html { redirect_to products_url(@store), notice: 'Product was successfully destroyed.' }
+      format.html { redirect_to store_products_path(@store), notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -72,7 +70,7 @@ class ProductsController < ApplicationController
   private
   #a way to call the store
 def load_store
-  @store = Store.find(params[:id])
+  @store = Store.find(params[:store_id])
 end 
 
     # Use callbacks to share common setup or constraints between actions.
