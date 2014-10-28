@@ -11,7 +11,7 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
-    @product = @store.products(params[:id])
+    @product = @store.products.find(params[:id])
   end
 
   # GET /products/new
